@@ -1,6 +1,9 @@
 //https://res.cloudinary.com/dz209s6jk/image/upload/f_auto,q_auto,w_700/Challenges/qd1p2yaogl41ymtozppc.jpg
 
 
+var p1 = '' 
+var p2 = ''
+
 
 var boardUser = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0] ,[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
 
@@ -15,6 +18,30 @@ let col6 = document.querySelector(".col6")
 let col7 = document.querySelector(".col7") 
 let curruser = document.querySelector("#curruser")  
 let resetbutton = document.querySelector(".restart") 
+
+let enterplayer = document.querySelector(".eplayer")
+let playersub = document.querySelector("#namesub") ;
+let inputplayer = document.querySelector("#eplayer_input")
+let inputpop = document.querySelector(".player-pop")
+
+playersub.addEventListener("click",() => { 
+   
+    if(inputplayer.value == '') { 
+        alert("Invalid name") 
+        return
+    }
+    
+    if(p1 == '') { 
+        p1 = inputplayer.value
+        document.querySelector("#player1").innerHTML = p1 
+        enterplayer.innerHTML = "ENTER PLAYER 2 NAME"
+        inputplayer.value = ""
+    } else { 
+        p2 = inputplayer.value
+        document.querySelector("#player2").innerHTML = p2
+        inputpop.style.display = "none"
+    }
+})
 
 
 function showWinner(user) {
@@ -260,3 +287,7 @@ col7.addEventListener("click",()=> {
 resetbutton.addEventListener("click",()=> { 
     resetGame()
 })
+
+
+//enter player names
+

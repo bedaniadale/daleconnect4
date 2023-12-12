@@ -244,3 +244,93 @@ display: none;
 .restart h1 { 
     font-size: 1.2rem;
 }
+
+
+
+
+.player-pop { 
+    width:100%; 
+    height :100%; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: white;
+}
+
+.player-box { 
+    width: 30%; 
+    height: 30%;
+    display: grid; 
+    grid-template-rows: 30% 30% 30% 10%;
+    grid-template-columns: 100%;
+    background-color: #5c2cd5;
+    color: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.pb-title, .pb-input, .pb-button, .pb-small { 
+    width: 100%; 
+    height: 100%;
+    display: flex; 
+
+}
+
+.pb-title { 
+
+    justify-content: center;
+    align-items:last baseline;
+}
+
+.pb-input { 
+    display: flex; 
+    justify-content: center;
+}
+
+.pb-input input[type=text] { 
+    width: 90%;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    font-size: 3rem;
+    transition: 300ms all ease 0s;
+}
+
+input:focus { 
+    transform: scale(1.03)
+}
+
+.pb-button { 
+    align-items: center;
+    justify-content: center;
+}
+
+.pb-button button { 
+    width: 40%;
+    height: 50%;
+    background-color: #7a44fe;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    transition: 300ms ease;
+}
+
+button:hover { 
+    background-color: #af90fd;
+}
+
+.pb-small { 
+    align-items: center;
+    justify-content: center;
+
+}
+
+.pb-small p { 
+    font-weight: 300;
+    font-size: 0.9rem;
+}
+
+.pb-small span { 
+    font-weight: 700;
+}
