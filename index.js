@@ -3,9 +3,12 @@
 
 var p1 = '' 
 var p2 = ''
+var last_winner = 0
 
 
 var boardUser = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0] ,[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
+
+var lastBoard = []
 
 //declare move buttons
 let col1 = document.querySelector(".col1") 
@@ -24,6 +27,17 @@ let playersub = document.querySelector("#namesub") ;
 let inputplayer = document.querySelector("#eplayer_input")
 let inputpop = document.querySelector(".player-pop")
 
+//operations 
+let opr_resetboard = document.querySelector("#rb"); 
+let opr_resetsession = document.querySelector("#res")
+let opr_recent = document.querySelector("#recent")
+let opr_about = document.querySelector("#about")
+
+//current turn 
+let currentTurnCircle = document.querySelector(".ct-circle")
+let currentTurnPlayer = document.querySelector("#ct")
+let currentTurnBg = document.querySelector("ct-box")
+
 playersub.addEventListener("click",() => { 
    
     if(inputplayer.value == '') { 
@@ -40,6 +54,7 @@ playersub.addEventListener("click",() => {
         p2 = inputplayer.value
         document.querySelector("#player2").innerHTML = p2
         inputpop.style.display = "none"
+        currentTurnPlayer.innerHTML = `${document.querySelector("#player1").innerHTML} (P1)`
     }
 })
 
@@ -60,6 +75,8 @@ function showWinner(user) {
     winnertext.innerHTML = userwinner + " - wins" + `(${color})`
 }
 
+
+/// CHECKING OF BOARD
 function checkRows(user) {
     let combo = [user, user,user,user]
     for(let x = 0; x < 6; x++) { 
@@ -70,6 +87,7 @@ function checkRows(user) {
             let d = boardUser[x][y+3] 
           
             if(a == combo[0] && b == combo[1] && c == combo[2] && d == combo[3]) { 
+                
                 return true
             } 
         }
@@ -84,8 +102,8 @@ function checkCols(user) {
             let b = boardUser[y+1][x]
             let c = boardUser[y+2][x]
             let d = boardUser[y+3][x]
-            
             if(a == combo[0] && b == combo[1] && c == combo[2] && d == combo[3]) { 
+
                 return true
             } 
 
@@ -135,7 +153,8 @@ function checkDiagonal(user) {
                 let b = diagonals[i][j+1]
                 let c = diagonals[i][j+2] 
                 let d = diagonals[i][j+3]
-                if(a == combo[0] && b == combo[1] && c == combo[2] && d == combo[3]) { 
+                if(a == combo[0] && b == combo[
+                    1] && c == combo[2] && d == combo[3]) { 
                     return true
                 }
 
@@ -147,16 +166,23 @@ function checkDiagonal(user) {
 }
 
 
-function resetGame() { 
+//reset the game
+function resetBoard() { 
+    if(last_winner != 0) { 
+        lastBoard = boardUser
+    }
+    
     boardUser = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0] ,[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
     loadBoard()
     let popup = document.querySelector(".winner-pop")
     popup.style.display = "none"
     curruser.innerHTML = "PLAYER 1"
+    currentTurnCircle.style.backgroundColor= '#fe6788'
+    currentTurnPlayer.innerHTML = `${document.querySelector("#player1").innerHTML} (P1)`
 }
 
 
-
+//Get the current user
 function getCurrentUser() { 
     if(curruser.innerHTML == "PLAYER 1") {
         return 1
@@ -164,11 +190,14 @@ function getCurrentUser() {
    
     return 2 
 }
+
+
+
+// INSERT A MOVE FUNCTION
 function insertMove(user, col) {
     if(boardUser[0][col] != 0)  { 
         alert("FULL"); 
         return
-
     }
 
     let index = 5; 
@@ -177,16 +206,21 @@ function insertMove(user, col) {
             if(user == 1) { 
                 boardUser[index][col] = 1 
                 curruser.innerHTML = "PLAYER 2"
+                currentTurnCircle.style.backgroundColor= '#ffcd67'
+                currentTurnPlayer.innerHTML = `${document.querySelector("#player2").innerHTML} (P2)`
                 if(checkRows(1) == true) { 
+                    last_winner = 1
                     showWinner(1)
                     return
                 }
 
                 if(checkCols(1)== true) { 
+                    last_winner = 1
                     showWinner(1)
                     return
                 }
                 if(checkDiagonal(1)== true) { 
+                    last_winner = 1
                     showWinner(1)
                     return
                 }
@@ -196,15 +230,21 @@ function insertMove(user, col) {
             } else { 
                 boardUser[index][col] =2;
                 curruser.innerHTML = "PLAYER 1"
+                currentTurnCircle.style.backgroundColor= '#fe6788'
+                currentTurnPlayer.innerHTML = `${document.querySelector("#player1").innerHTML} (P1)`
+                //changeTurnColor(2)
                 if(checkRows(2) == true) { 
+                    last_winner = 2
                     showWinner(2)
                     return 
                 } 
                 if(checkCols(2) == true) { 
+                    last_winner = 2
                     showWinner(2)
                     return 
                 } 
                 if(checkDiagonal(2)== true) { 
+                    last_winner = 2
                     showWinner(2)
                     return
                 }
@@ -227,6 +267,31 @@ function loadBoard() {
             if(boardUser[i][j] == 1) { 
                 tab+=` <div class="slot"> <div class="circle p1circle"></div></div>`
             } else if(boardUser[i][j] == 2) { 
+                tab+=` <div class="slot"> <div class="circle p2circle"></div></div>`
+            } else { 
+                tab+=` <div class="slot"> <div class="circle"></div></div>`
+            }
+            
+        }
+        tab+=`</div>`
+    }
+
+
+    board.innerHTML = tab
+}
+
+
+
+function loadRecentBoard() { 
+    let board = document.querySelector(".rb-board-box")
+    board.innerHTML = ''
+    let tab = ''
+    for(let i = 0; i < 6; i++) { 
+        tab+="<div class ='row'>"
+        for(let j = 0; j < 7; j++) { 
+            if(lastBoard[i][j] == 1) { 
+                tab+=` <div class="slot"> <div class="circle p1circle"></div></div>`
+            } else if(lastBoard[i][j] == 2) { 
                 tab+=` <div class="slot"> <div class="circle p2circle"></div></div>`
             } else { 
                 tab+=` <div class="slot"> <div class="circle"></div></div>`
@@ -285,9 +350,46 @@ col7.addEventListener("click",()=> {
 
 //event listener reset
 resetbutton.addEventListener("click",()=> { 
-    resetGame()
+    resetBoard()
 })
 
 
-//enter player names
+opr_resetboard.addEventListener("click", resetBoard)
 
+
+opr_recent.addEventListener("click",()=> { 
+  
+    if(last_winner == 0) { 
+        alert("NO RECENT RESULT") 
+        return
+    }
+    let rec_wintext = document.querySelector("#recent_winner_text") 
+    if(last_winner == 1) { 
+        rec_wintext.innerHTML = `WINNER: ${document.querySelector("#player1").innerHTML} (Player 1)`
+    } else { 
+        rec_wintext.innerHTML = `WINNER: ${document.querySelector("#player2").innerHTML} (Player 2)`
+    }
+    document.querySelector(".recent-pop").style.display = "flex";
+
+    loadRecentBoard()
+})
+
+
+let confirm_recent = document.querySelector("#confirm_recent") 
+
+confirm_recent.addEventListener("click",() =>{ 
+    document.querySelector(".recent-pop").style.display = "none";
+})
+
+
+opr_resetsession.addEventListener("click",()=>{ 
+    p1 = '' 
+    p2 = ''
+    boardUser =[[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0] ,[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0]]
+    inputplayer.value = '';
+    enterplayer.innerHTML = "ENTER PLAYER 1 NAME"
+    last_winner = 0
+    resetBoard() 
+    lastBoard = []
+    inputpop.style.display = "flex"
+})

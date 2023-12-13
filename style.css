@@ -77,7 +77,8 @@ body {
 }
 
 .pnum { 
-    background-color: var(--lwhite);
+    background-color: var(--dpurple);
+    color: white;
 }
 
 .pname { 
@@ -333,4 +334,206 @@ button:hover {
 
 .pb-small span { 
     font-weight: 700;
+}
+
+.board-turn { 
+    width: 100%; 
+    height: 100%; 
+    
+    display: grid; 
+    grid-template-rows: 70% 30%;
+    grid-template-columns: 100%;
+}
+
+.current-turn, .operations{ 
+    width: 100%; 
+    height: 100%;
+    display: flex; 
+}
+
+
+.current-turn { 
+    align-items: center;
+    justify-content: center;
+}
+
+.ct-box { 
+    width: 30%; 
+    height: 80%;
+    display: grid; 
+    grid-template-rows:100%;
+    grid-template-columns: 30% 70%;
+    background-color: #400ac7;
+    border-radius:25px;
+    overflow: hidden;
+}
+
+.ct-icon { 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.ct-circle { 
+    width: 48px; 
+    height: 48px; 
+    background-color: #fe6788;
+    border-radius: 50%;
+}
+
+.ct-text { 
+    background-color: white;
+    height: 100%; 
+    width: 100%; 
+    display: grid; 
+    grid-template-rows: 30% 70%;
+    grid-template-columns: 100%;
+}
+
+.ctt { 
+    width: 100%; 
+    height: 100%;
+    display: flex; 
+    align-items:last baseline;
+  
+}
+
+.ctt h3{ 
+    margin-left: 1rem;
+    font-weight: 500;
+}
+
+.ctb { 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    
+    align-items:start;
+}
+
+.ctb h1 { 
+    font-weight: 900;
+    margin-left: 1rem
+}
+
+
+
+
+
+
+
+.operations { 
+    align-items: space;
+    justify-content: space-evenly;
+}
+
+.operations button{ 
+    height: 100%;
+    width: 15rem;
+    font-family: 'Poppins';
+
+    border: none;
+    border-radius: 25px;
+    background-color: #5c2cd5;
+    color: white;
+    font-size: 1.3rem;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.operations button:hover  {
+    background-color:#400ac7;
+} 
+
+
+.combo  {
+    background-color: black;
+}
+
+
+
+.recent-pop { 
+    width: 100%;
+    height: 100%; 
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+
+}
+
+
+.recent-box { 
+    border-radius: 15px; 
+    overflow: hidden;
+    background-color: white;
+    width: 50%; 
+    height: 60%; 
+    display: grid; 
+    grid-template-rows: 20% 70% 10%;
+    grid-template-columns: 100%;
+   
+}
+
+.recent-winner { 
+    height: 100%; 
+    width: 100%; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.recent-winner h1 { 
+    font-weight: 900;
+}
+
+.recent-board { 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.rb-board-box .circle { 
+    height: 45px;
+    width: 45px;
+}
+
+.rb-board-box { 
+    width: 80%;
+    height: 80%; 
+    border-radius: 25px;
+    background-color: rgb(231, 227, 227);
+    display: grid;
+    grid-template-rows: repeat(6, 16.6%);  
+     
+
+}
+
+.recent-cancel { 
+    height: 100%; width: 100%; 
+
+    display: flex; 
+    justify-content:center ;
+    align-items: center;
+}
+
+.recent-cancel button { 
+    background-color: var(--dpurple);
+    color: white; 
+    border: none;
+    width: 30%; 
+    height: 70%; 
+    border-radius: 5px;
+    transition: 300ms; 
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.recent-cancel button:hover { 
+    background-color: #400ac7;
 }
