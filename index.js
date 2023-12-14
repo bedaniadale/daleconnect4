@@ -10,6 +10,11 @@ var boardUser = [[0,0,0,0,0,0,0], [0,0,0,0,0,0,0], [0,0,0,0,0,0,0] ,[0,0,0,0,0,0
 
 var lastBoard = []
 
+var p1points = 0 
+var p2points = 0
+document.querySelector("#pts1").innerHTML = `SCORE: ${p1points}`
+document.querySelector("#pts2").innerHTML = `SCORE: ${p2points}`
+
 //declare move buttons
 let col1 = document.querySelector(".col1") 
 let col2 = document.querySelector(".col2") 
@@ -71,6 +76,9 @@ function showWinner(user) {
     }
     let popup = document.querySelector(".winner-pop") 
     let winnertext = document.querySelector("#winner")
+    document.querySelector("#pts1").innerHTML = `SCORE: ${p1points}`
+    document.querySelector("#pts2").innerHTML = `SCORE: ${p2points}`
+
     popup.style.display = "flex"
     winnertext.innerHTML = userwinner + " - wins" + `(${color})`
 }
@@ -135,7 +143,7 @@ function checkDiagonal(user) {
     let rtlcd2 = [bu[5][2], bu[4][3], bu[3][4], bu[2][5], bu[1][6]]
     let rtlcd3 = [bu[5][3], bu[4][4], bu[3][5], bu[2][6]]
 
-    let diagonals = [ltrcd1, ltrcd2, ltrcd3, ltrcu1, ltrcu2, ltrcu3, rtlcu1, rtlcu2, rtlcu3, rtlcd1, rtlcd2, rtlcu3]
+    let diagonals = [ltrcd1, ltrcd2, ltrcd3, ltrcu1, ltrcu2, ltrcu3, rtlcu1, rtlcu2, rtlcu3, rtlcd1, rtlcd2, rtlcd3]
 
 
     for(let i = 0; i < diagonals.length; i++) { 
@@ -178,6 +186,7 @@ function resetBoard() {
     popup.style.display = "none"
     curruser.innerHTML = "PLAYER 1"
     currentTurnCircle.style.backgroundColor= '#fe6788'
+    
     currentTurnPlayer.innerHTML = `${document.querySelector("#player1").innerHTML} (P1)`
 }
 
@@ -210,17 +219,22 @@ function insertMove(user, col) {
                 currentTurnPlayer.innerHTML = `${document.querySelector("#player2").innerHTML} (P2)`
                 if(checkRows(1) == true) { 
                     last_winner = 1
+                    p1points+=1 
                     showWinner(1)
+                   
                     return
                 }
 
                 if(checkCols(1)== true) { 
                     last_winner = 1
+                    p1points+=1 
                     showWinner(1)
+                    
                     return
                 }
                 if(checkDiagonal(1)== true) { 
                     last_winner = 1
+                    p1points+=1 
                     showWinner(1)
                     return
                 }
@@ -235,16 +249,19 @@ function insertMove(user, col) {
                 //changeTurnColor(2)
                 if(checkRows(2) == true) { 
                     last_winner = 2
+                    p2points+=1 
                     showWinner(2)
                     return 
                 } 
                 if(checkCols(2) == true) { 
                     last_winner = 2
+                    p2points+=1 
                     showWinner(2)
                     return 
                 } 
                 if(checkDiagonal(2)== true) { 
                     last_winner = 2
+                    p2points+=1 
                     showWinner(2)
                     return
                 }
@@ -391,5 +408,11 @@ opr_resetsession.addEventListener("click",()=>{
     last_winner = 0
     resetBoard() 
     lastBoard = []
+    p1points = 0 
+    p2points = 0 
+    document.querySelector("#pts1").innerHTML = `SCORE: ${p1points}`
+    document.querySelector("#pts2").innerHTML = `SCORE: ${p2points}`
+    
     inputpop.style.display = "flex"
+    
 })
